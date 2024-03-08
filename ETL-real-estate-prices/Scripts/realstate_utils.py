@@ -13,23 +13,27 @@ def scrapping(url: str, page: int):
         url (str): _description_
         page (int): _description_
     """
-
+    data = []
+    url = rf"{url}&page={page}"
     response = requests.get(url, timeout=120)
 
     while response.status_code == 200:
-        url = rf"{url}&page={page}"
-        response = requests.get(url, timeout=120)
+        #url = rf"{url}&page={page}"
+        #response = requests.get(url, timeout=120)
+        #print(page)
         html = response.content
         soup = bs(html, "html")
         # print("Status code: ", response.status_code)
         descs = soup.find_all("div", {"class": "infos"})
-        # print("DESCS: ", descs)
-
-        data = []
+        #print("DESCS: ", descs)
+        #print(len(descs))
+        if not descs:
+            break
 
         for i, des in enumerate(descs):
+            #print(i)
             content = {
-                "id": i,
+                "id": str(page) + "_" + str(i),
                 "title": None,
                 "description": None,
                 "type": None,
@@ -40,7 +44,7 @@ def scrapping(url: str, page: int):
                 "number_pieces": None,
             }
 
-            # print("DES: ", des)
+            #print(f"{des.find("h3").get_text().strip().replace("\n", "")}")
             content["title"] = des.find("h3").get_text().strip().replace("\n", "")
 
             content["description"] = (
@@ -86,15 +90,17 @@ def scrapping(url: str, page: int):
             elif "pièce" not in dt and "m²" in dt:
                 content["surface"] = float(dt.split("m²")[0])
                 # print("SURFACE: ", content['surface'])
-
+            #print(content)
             data.append(content)
 
-        if not data:
-            break
+        
 
-        print("DATA: ", data)
 
         page += 1
+        url = rf"{url}&page={page}"
+        response = requests.get(url, timeout=120)
+    
+    return data
 
 
 if __name__ == "__main__":
