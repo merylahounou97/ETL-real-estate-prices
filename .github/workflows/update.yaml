@@ -9,10 +9,8 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - name: Fetch upstream meryl_task branch
-        run: git fetch upstream feature/meryl_task:upstream-meryl-task
+        run: git fetch upstream feature/meryl_task
       - name: Merge changes from upstream meryl_task branch into main
-        run: |
-          git checkout main
-          git merge upstream-meryl-task --no-edit
+        run: git merge --allow-unrelated-histories upstream/main
       - name: Push changes to origin main
         run: git push origin main
