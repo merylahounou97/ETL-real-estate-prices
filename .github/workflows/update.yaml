@@ -11,8 +11,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
-      - name: Set up upstream remote
-        run: git remote add upstream git@github.com:merylahounou97/NukuData.git
+      # - name: Set up upstream remote
+      #   run: git remote add upstream git@github.com:merylahounou97/NukuData.git
       - name: Fetch upstream meryl_task branch
         run: git fetch upstream feature/meryl_task
       - name: Merge changes from upstream meryl_task branch into main
