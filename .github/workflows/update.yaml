@@ -1,7 +1,7 @@
 name: Sync Fork with Upstream
-on:
-  schedule:
-    - cron: '0 0 * * 0'  # Exécuter chaque dimanche à minuit (UTC)
+on: [push]
+  # schedule:
+  #   - cron: '0 0 * * 0'  # Exécuter chaque dimanche à minuit (UTC)
 jobs:
   sync:
     runs-on: ubuntu-latest
