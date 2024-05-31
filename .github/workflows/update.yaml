@@ -7,10 +7,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Fetch upstream
-        run: git fetch upstream
-      - name: Merge changes from upstream
-        run: git merge upstream/main
-      - name: Push changes to origin
+        uses: actions/checkout@v3
+      - name: Fetch upstream meryl_task branch
+        run: git fetch upstream feature/meryl_task:upstream-meryl-task
+      - name: Merge changes from upstream meryl_task branch into main
+        run: |
+          git checkout main
+          git merge upstream-meryl-task --no-edit
+      - name: Push changes to origin main
         run: git push origin main
