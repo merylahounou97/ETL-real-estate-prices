@@ -1,13 +1,16 @@
 name: Sync Fork with Upstream
-on: [push]
-  # schedule:
-  #   - cron: '0 0 * * 0'  # Exécuter chaque dimanche à minuit (UTC)
+on:
+  push:
+    branches:
+      - main
 jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
+        with:
+          ssh-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Set up upstream remote
         run: git remote add upstream https://github.com/Bakary98/NukuData.git
       - name: Fetch upstream meryl_task branch
