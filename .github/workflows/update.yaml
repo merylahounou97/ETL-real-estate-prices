@@ -7,7 +7,9 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
       - name: Fetch upstream
-        run: git fetch upstream
+        run: |
+          git remote add upstream https://github.com/Bakary98/NukuData.git
+          git fetch upstream
       - name: Merge changes from upstream
         run: git merge upstream/main
       - name: Push changes to origin
